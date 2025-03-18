@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Ponto {
+  id        Int      @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+  rotasOrigem  Rota[] @relation("Origem")
+  rotasDestino Rota[] @relation("Destino")
+}
+
+model Rota {
+  id        Int    @id @default(autoincrement())
+  origemId  Int
+  destinoId Int
+  distancia Float
+  duracao   Float
+
+  origem  Ponto @relation("Origem", fields: [origemId], references: [id])
+  destino Ponto @relation("Destino", fields: [destinoId], references: [id])
+}
