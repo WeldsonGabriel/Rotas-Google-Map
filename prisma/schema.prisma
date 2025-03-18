@@ -7,14 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-<<<<<<< HEAD
 model Rota {
   id      Int     @id @default(autoincrement())
   nome    String
   origem  String
   destino String
+
+  pontosOrigem Ponto[] @relation("Origem")
+
+  pontosDestino Ponto[] @relation("Destino")
 }
-=======
+
 model Ponto {
   id        Int      @id @default(autoincrement())
   latitude  Float
@@ -23,14 +26,4 @@ model Ponto {
   rotasDestino Rota[] @relation("Destino")
 }
 
-model Rota {
-  id        Int    @id @default(autoincrement())
-  origemId  Int
-  destinoId Int
-  distancia Float
-  duracao   Float
 
-  origem  Ponto @relation("Origem", fields: [origemId], references: [id])
-  destino Ponto @relation("Destino", fields: [destinoId], references: [id])
-}
->>>>>>> main
